@@ -19,3 +19,63 @@ Run `npx nx connect-to-nx-cloud` to enable [remote caching](https://nx.app) and 
 ## Further help
 
 Visit the [Nx Documentation](https://nx.dev) to learn more.
+
+
+## see:
+> https://blog.logrocket.com/microservices-nestjs-kafka-typescript/
+
+## Usefull commands
+
+* Create `nx` workspace
+
+```bash
+npx create-nx-workspace@latest
+```
+
+* Create a shared library (in a folder named `shared`) for code sharing among microservices
+
+```bash
+nx g @nrwl/node:lib shared
+```
+
+* Create a microservice (named `new-microservice`)
+
+```bash
+nx g @nrwl/nest:app new-microservice
+```
+
+* Running a microservices
+
+```bash
+nx serve new-microservice
+```
+
+## Diagram
+
+```mermaid
+graph LR;
+  user --> api-gateway;
+  api-gateway --> kafka;
+  kafka --> api-gateway
+  MS1(auth-microservice) --> kafka;
+  kafka --> MS1;
+  MS2(payment-microservice) --> kafka;
+  kafka --> MS2;
+  subgraph Microservices
+    MS1
+    MS2
+    api-gateway
+  end
+  subgraph Messaging
+    kafka
+  end
+```
+
+
+## Run
+
+```bash
+nx serve api-gateway
+nx serve auth-microservice
+nx serve payment-microservice
+```
